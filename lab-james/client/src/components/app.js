@@ -1,4 +1,8 @@
 import React from 'react';
+import {Route} from 'react-router-dom';
+
+import Header from './header.js';
+import LogIn from './log-in.js';
 
 class App extends React.Component {
 
@@ -9,7 +13,10 @@ class App extends React.Component {
   render(){
     return(
       <React.Fragment>
-        <p> YO! </p>
+        <Header />
+        <main>
+          <Route exact path='/' component={LogIn} />
+        </main>
       </React.Fragment>
     )
   }
