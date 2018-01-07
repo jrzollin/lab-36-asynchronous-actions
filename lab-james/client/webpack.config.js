@@ -2,6 +2,8 @@
 
 const HTMLPlugin = require('html-webpack-plugin');
 const ExtractPlugin = require('extract-text-webpack-plugin');
+const {EnvironmentPlugin,DefinePlugin} = require('webpack');
+require('dotenv').config();
 
 module.exports = {
   entry: `${__dirname}/src/main.js`,
@@ -15,6 +17,9 @@ module.exports = {
       template: `${__dirname}/src/index.html`,
     }),
     new ExtractPlugin('bundle.[hash].css'),
+    new DefinePlugin({
+      '__SERVER_URL__': JSON.stringify(process.env.SERVER_URL),
+    })
   ],
   module: {
     rules: [

@@ -17,6 +17,7 @@ class LogInForm extends React.Component {
 
   handleSubmit(e){
     e.preventDefault();
+    this.props.submitAction(this.state);
     console.log('submited');
     this.props.toggleForm();
   }

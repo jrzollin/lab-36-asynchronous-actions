@@ -4,7 +4,9 @@ const User = require('../models/user.js');
 const basicHTTP = require('../lib/middleware/basicHTTP.js');
 const jsonParser = require('body-parser').json();
 
-const authRouter = module.exports = require('express').Rounter();
+const authRouter = module.exports = require('express').Router();
+
+console.log('hi');
 
 authRouter.post('/createUser', jsonParser, (req, res, next) => {
   if(!req.body.username){
@@ -42,7 +44,7 @@ authRouter.post('/createUser', jsonParser, (req, res, next) => {
     });
 });
 
-authRouter.get('/signin', basicHTTP, (req, res, next) => {
+authRouter.get('/signin', (req, res, next) => {
   User.findOne({username: req.auth.username})
     .then(user => {
       if(!user){
