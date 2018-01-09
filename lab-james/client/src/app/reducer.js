@@ -1,5 +1,7 @@
 import {combineReducers} from 'redux';
 
-export default combineReducers({
+import logInReducer from '../components/login/log-in-reducer.js';
 
+export default combineReducers({
+  users: logInReducer,
 });

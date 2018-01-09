@@ -2,16 +2,16 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config();
 
 let app = express();
 mongoose.Promise = require('bluebird');
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/lab36', {useMongoClient: true});
 
-app.use( (req, res, next) => {
-  res.append('Access-Control-Allow-Origin', '*');
-  next();
-});
+app.use(cors());
+
+app.use(require('../routes/auth-routes.js'));
 
 app.use(require('./middleware/error.js'));
 

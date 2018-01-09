@@ -1,6 +1,8 @@
 import React from 'react';
-import {renderIf} from '../lib/render-if.js';
+import {renderIf} from '../../lib/render-if.js';
+import {connect} from 'react-redux';
 
+import {userCreate} from './log-in-actions';
 import LogInForm from './log-in-form.js';
 
 class LogIn extends React.Component {
@@ -15,6 +17,7 @@ class LogIn extends React.Component {
 
     this.toggleLogIn = this.toggleLogIn.bind(this);
     this.toggleCreate = this.toggleCreate.bind(this);
+    this.createUser = this.createUser.bind(this);
   }
 
   toggleLogIn(){
@@ -37,6 +40,10 @@ class LogIn extends React.Component {
     }
   }
 
+  createUser(state){
+    this.props.handleUserCreate(Object.assign({}, state));
+  }
+
   render(){
     return(
       <React.Fragment>
@@ -57,7 +64,7 @@ class LogIn extends React.Component {
         {renderIf(
           this.state.renderCreate,
           <div className="log-in">
-            <LogInForm title="Create New Profile" toggleForm={this.toggleCreate} />
+            <LogInForm title="Create New Profile" toggleForm={this.toggleCreate} submitAction={this.createUser} />
           </div>
         )}
       </React.Fragment>
@@ -65,4 +72,14 @@ class LogIn extends React.Component {
   }
 }
 
-export default LogIn;
+const mapStateToProps = state => {
+  return {
+    users: state.users
+  }
+}
+
+const mapDispatchToProps = (dispatch, getState) => ({
+    handleUserCreate: user => dispatch(userCreate(user))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn);
