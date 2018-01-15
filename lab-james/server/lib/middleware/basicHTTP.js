@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     let authArray = stringifiedHead.split(':');
     let authObject = {
       username: authArray[0],
-      password: authArray[1]
+      password: authArray[1],
     };
 
     if(!authObject.username || !authObject.password){

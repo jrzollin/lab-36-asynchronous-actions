@@ -27,7 +27,7 @@ module.exports = {
             reject(err);
           } else {
             isRunning = true;
-            console.log('Server up');
+            console.log(`Server up on ${process.env.PORT}`);
           }
         });
 
@@ -57,5 +57,5 @@ module.exports = {
 
       }
     });
-  }
+  },
 };

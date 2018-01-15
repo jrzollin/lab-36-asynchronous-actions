@@ -6,8 +6,6 @@ const jsonParser = require('body-parser').json();
 
 const authRouter = module.exports = require('express').Router();
 
-console.log('hi');
-
 authRouter.post('/createUser', jsonParser, (req, res, next) => {
   if(!req.body.username){
     return(
@@ -33,7 +31,7 @@ authRouter.post('/createUser', jsonParser, (req, res, next) => {
     .then(user => {
       user.save()
         .then(user => {
-          res.send(user.generateToken());
+          res.send(user);
         })
         .catch(err => {
           next(err);
@@ -44,7 +42,7 @@ authRouter.post('/createUser', jsonParser, (req, res, next) => {
     });
 });
 
-authRouter.get('/signin', (req, res, next) => {
+authRouter.get('/findUser', basicHTTP, (req, res, next) => {
   User.findOne({username: req.auth.username})
     .then(user => {
       if(!user){
@@ -53,7 +51,7 @@ authRouter.get('/signin', (req, res, next) => {
 
       user.checkPass(req.auth.password)
         .then(user => {
-          res.send(user.generateToken());
+          res.send(user);
         })
         .catch( () => {
           next({statusCode: 401, message: 'Invalid password'});
