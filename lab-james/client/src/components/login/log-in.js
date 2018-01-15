@@ -3,6 +3,7 @@ import {renderIf} from '../../lib/render-if.js';
 import {connect} from 'react-redux';
 
 import {userCreate} from './log-in-actions';
+import {userFind} from './log-in-actions';
 import LogInForm from './log-in-form.js';
 
 class LogIn extends React.Component {
@@ -18,6 +19,7 @@ class LogIn extends React.Component {
     this.toggleLogIn = this.toggleLogIn.bind(this);
     this.toggleCreate = this.toggleCreate.bind(this);
     this.createUser = this.createUser.bind(this);
+    this.findUser = this.findUser.bind(this);
   }
 
   toggleLogIn(){
@@ -44,6 +46,10 @@ class LogIn extends React.Component {
     this.props.handleUserCreate(Object.assign({}, state));
   }
 
+  findUser(state){
+    this.props.handleUserFind(state);
+  }
+
   render(){
     return(
       <React.Fragment>
@@ -58,7 +64,7 @@ class LogIn extends React.Component {
         {renderIf(
           this.state.renderLogIn,
           <div className="log-in">
-            <LogInForm title="Log In" toggleForm={this.toggleLogIn} />
+            <LogInForm title="Log In" toggleForm={this.toggleLogIn} submitAction={this.findUser} />
           </div>
         )}
         {renderIf(
@@ -79,7 +85,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch, getState) => ({
-    handleUserCreate: user => dispatch(userCreate(user))
+    handleUserCreate: user => dispatch(userCreate(user)),
+    handleUserFind: user => dispatch(userFind(user))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogIn);
