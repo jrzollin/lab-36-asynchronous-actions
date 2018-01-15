@@ -54,7 +54,7 @@ class LogIn extends React.Component {
     return(
       <React.Fragment>
         {renderIf(
-          !this.state.renderLogIn && !this.state.renderCreate,
+          !this.state.renderLogIn && !this.state.renderCreate && !this.state.loggedIn && !this.props.users[0],
           <div className="log-in">
             <button id="renderLogIn" onClick={this.toggleLogIn}>Log In</button>
             <p>New user?  Create a profile here.</p>
@@ -71,6 +71,16 @@ class LogIn extends React.Component {
           this.state.renderCreate,
           <div className="log-in">
             <LogInForm title="Create New Profile" toggleForm={this.toggleCreate} submitAction={this.createUser} />
+          </div>
+        )}
+        {renderIf(
+          this.props.users[0],
+          <div>
+            {
+              this.props.users.map( (user, i) => (
+                <h1 className="welcome" key={i}>Welome {user.username}</h1>
+              ))
+            }
           </div>
         )}
       </React.Fragment>
